@@ -34,13 +34,3 @@ spec:
     - name: http
       targetPort: 3000
       port: 80
-
-
-      nginx-proxy:
-    build:
-      dockerfile: Dockerfile
-      context: ./proxy
-    depends_on:
-      - app
-    ports:
-      - 80:80
