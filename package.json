@@ -4,6 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "test": "echo \"There are no test-cases\" && exit 0",
     "start": "node app.js"
   },
   "author": "",
