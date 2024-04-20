@@ -5,6 +5,12 @@ pipeline {
     }
    
     stages { 
+
+          stage('Git Checkout') {
+            steps {
+               git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/CodeBrigade404/CTSE.git'
+            }
+        }
         stage('Node JS Build') { 
             steps {
                 sh 'npm install'
@@ -33,15 +39,15 @@ pipeline {
 
         stage('Deploy To Kubernetes') {
             steps {
-                withKubeConfig(credentialsId: 'k8-token', serverUrl: 'https://800F84F142BBCD88A8B3616C37B6CB94.gr7.ap-southeast-1.eks.amazonaws.com', namespace: 'webapps') {
-                    sh "kubectl apply -f deployment-service.yml"
+withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-2', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://194A46D1CA4098AC4F36AE7BA222AC35.gr7.ap-southeast-1.eks.amazonaws.com']]) {   
+    sh "kubectl apply -f deployment-service.yml"                 
                 }
             }
         }
         
         stage('Verify Deployment') {
             steps {
-                withKubeConfig(credentialsId: 'k8-token', serverUrl: 'https://800F84F142BBCD88A8B3616C37B6CB94.gr7.ap-southeast-1.eks.amazonaws.com', namespace: 'webapps') {
+withKubeCredentials(kubectlCredentials: [[caCertificate: '', clusterName: 'EKS-2', contextName: '', credentialsId: 'k8-token', namespace: 'webapps', serverUrl: 'https://194A46D1CA4098AC4F36AE7BA222AC35.gr7.ap-southeast-1.eks.amazonaws.com']]) {   
                     sh "kubectl get svc -n webapps"
                 }
             }
