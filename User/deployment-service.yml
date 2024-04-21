@@ -1,0 +1,36 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nodejs-User
+  namespace: webapps
+  labels:
+    app: nodejs-User
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-User
+  template:
+    metadata:
+      labels:
+        app: nodejs-User
+    spec:
+      containers:
+        - name: nodejs-User
+          image: "lachisenarath576259/UserService"
+          ports:
+            - containerPort: 3001
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-User
+  namespace: webapps
+spec:
+  selector:
+    app: nodejs-User
+  type: LoadBalancer
+  ports:
+    - name: http
+      targetPort: 3001
+      port: 80
