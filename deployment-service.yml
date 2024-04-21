@@ -35,26 +35,26 @@ spec:
       targetPort: 3000
       port: 80
 
-----
+---
 kind: Deployment
 apiVersion: apps/v1
 metadata:
-  name: nodejs-app
+  name: nodejs-order
   namespace: webapps
   labels:
-    app: nodejs-app
+    app: nodejs-order
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nodejs-app
+      app: nodejs-order
   template:
     metadata:
       labels:
-        app: nodejs-app
+        app: nodejs-order
     spec:
       containers:
-        - name: nodejs-app
+        - name: nodejs-order
           image: "lachisenarath576259/Order"
           ports:
             - containerPort: 4002
@@ -62,14 +62,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nodejs-app
+  name: nodejs-order
   namespace: webapps
 spec:
   selector:
-    app: nodejs-app
+    app: nodejs-order
   type: LoadBalancer
   ports:
     - name: http
       targetPort: 4002
       port: 80
-
