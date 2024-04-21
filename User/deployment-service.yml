@@ -19,7 +19,7 @@ spec:
         - name: nodejs-user
           image: "lachisenarath576259/userservice"
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
 ---
 apiVersion: v1
 kind: Service
@@ -32,5 +32,5 @@ spec:
   type: LoadBalancer
   ports:
     - name: http
-      targetPort: 3000
+      targetPort: 3001
       port: 80
