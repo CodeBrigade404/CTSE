@@ -34,3 +34,42 @@ spec:
     - name: http
       targetPort: 3000
       port: 80
+
+----
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: nodejs-app
+  namespace: webapps
+  labels:
+    app: nodejs-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-app
+  template:
+    metadata:
+      labels:
+        app: nodejs-app
+    spec:
+      containers:
+        - name: nodejs-app
+          image: "lachisenarath576259/Order"
+          ports:
+            - containerPort: 4002
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-app
+  namespace: webapps
+spec:
+  selector:
+    app: nodejs-app
+  type: LoadBalancer
+  ports:
+    - name: http
+      targetPort: 4002
+      port: 80
+
